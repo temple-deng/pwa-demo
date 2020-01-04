@@ -70,12 +70,11 @@ self.addEventListener('fetch', (e) => {
     }
 
     e.respondWith(
-        fetch(e.request)
-            .catch(() => {
-                return caches.open(cacheName)
-                    .then((cache) => {
-                        return cache.match('offline.html');
-                    });
-            })
+        caches.open(fileCache).then((cache) => {
+            return cache.match(e.request)
+                .then((response) => {
+                    return response || fetch(e.request);
+                });
+        })
     );
 })
