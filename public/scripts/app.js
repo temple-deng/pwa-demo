@@ -93,7 +93,7 @@ function renderForecast(card, data) {
 }
 
 function getForecastFromNetwork(coords) {
-return fetch(`https://api.darksky.net/0451d9104216d2a350a2d39ea16a6115/${coords}`)
+return fetch(`https://api.darksky.net/forecast/0451d9104216d2a350a2d39ea16a6115/${coords}`)
     .then((response) => {
         return response.json();
     })
