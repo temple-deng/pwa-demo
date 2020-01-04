@@ -105,7 +105,21 @@ return fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/foreca
 }
 
 function getForecastFromCache(coords) {
-    // CODELAB: Add code to get weather forecast from the caches object.
+    if (!('caches' in window)) {
+        return null;
+    }
+    const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0451d9104216d2a350a2d39ea16a6115/${coords}`;
+    return caches.match(url)
+        .then((response) => {
+        if (response) {
+            return response.json();
+        }
+        return null;
+        })
+        .catch((err) => {
+        console.error('Error getting data from cache', err);
+        return null;
+        });
 
 }
 
@@ -130,6 +144,10 @@ function updateData() {
         const location = weatherApp.selectedLocations[key];
         const card = getForecastCard(location);
         // CODELAB: Add code to call getForecastFromCache
+        getForecastFromCache(location.geo)
+            .then((forecast) => {
+            renderForecast(card, forecast);
+            });
 
         // Get the forecast data from the network.
         getForecastFromNetwork(location.geo)
