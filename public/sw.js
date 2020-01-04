@@ -1,7 +1,7 @@
 const cacheName = 'cache-v1';
 
 const v1CacheFiles = [
-    '/offline.html'
+    '/pwa-demo/public/offline.html'
 ];
 
 self.addEventListener('install', (e) => {
