@@ -106,7 +106,7 @@ return fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/foreca
 
 function getForecastFromCache(coords) {
     if (!('caches' in window)) {
-        return Promise.reject(null);
+        return Promise.resolve(null);
     }
     const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0451d9104216d2a350a2d39ea16a6115/${coords}`;
     return caches.match(url)
