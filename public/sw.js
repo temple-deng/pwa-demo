@@ -1,5 +1,5 @@
-const fileCache = 'file-cache-v2';
-const dataCache = 'data-cache-v1';
+const fileCache = 'file-cache-v3';
+const dataCache = 'data-cache-v2';
 
 const v2CacheFiles = [
     './',
@@ -40,7 +40,7 @@ self.addEventListener('activate', (e) => {
     e.waitUntil(
         caches.keys().then((keyList) => {
             return Promise.all(keyList.map((key) => {
-                if (key !== fileCache || key !== dataCache) {
+                if (key !== fileCache && key !== dataCache) {
                     console.log('[ServiceWorker] Removing old cache', key);
                     return caches.delete(key);
                 }
