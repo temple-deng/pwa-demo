@@ -2,6 +2,7 @@ const fileCache = 'file-cache-v4';
 const dataCache = 'data-cache-v2';
 
 const v2CacheFiles = [
+    './',
     './index.html',
     './scripts/app.js',
     './scripts/install.js',
