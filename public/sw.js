@@ -1,12 +1,11 @@
-const fileCache = 'file-cache-v3';
+const fileCache = 'file-cache-v4';
 const dataCache = 'data-cache-v2';
 
 const v2CacheFiles = [
-    '/',
     './index.html',
     './scripts/app.js',
     './scripts/install.js',
-    './scripts/cache.js',
+    './scripts/register.js',
     './scripts/luxon-1.11.4.js',
     './styles/style.css',
     './images/add.svg',
