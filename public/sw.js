@@ -56,19 +56,16 @@ self.addEventListener('fetch', (e) => {
             caches.open(dataCache).then((cache) => {
                 return fetch(e.request)
                     .then((response) => {
-                        // If the response was good, clone it and store it in the cache.
                         if (response.status === 200) {
                             cache.put(e.request.url, response.clone());
                         }
                         return response;
-                    }).catch((err) => {
-                        // Network request failed, try to get it from the cache.
+                    }).catch(() => {
                         return cache.match(e.request);
                     });
             }));
         return;
     }
-
     e.respondWith(
         caches.open(fileCache).then((cache) => {
             return cache.match(e.request)
@@ -77,4 +74,4 @@ self.addEventListener('fetch', (e) => {
                 });
         })
     );
-})
+});
