@@ -1,5 +1,5 @@
-const fileCache = 'file-cache-v4';
-const dataCache = 'data-cache-v2';
+const fileCache = 'file-cache-v1';
+const dataCache = 'data-cache-v1';
 
 const v2CacheFiles = [
     './',
@@ -72,7 +72,7 @@ self.addEventListener('fetch', (e) => {
             return cache.match(e.request)
                 .then((response) => {
                     return response || fetch(e.request);
-                });
+                }).catch(() => {});
         })
     );
 });
