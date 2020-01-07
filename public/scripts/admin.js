@@ -22,7 +22,7 @@ btn.addEventListener('click', () => {
     }).then((res) => {
         if (!res.ok) {
             alert('推送失败-not ok')
-            document.getElementById('error').innerHTML = res.statusText;
+            document.getElementById('error').innerHTML = res.statusText + res.text();
         }
     }).catch(err => {
         document.getElementById('error').innerHTML = JSON.stringify(err);
