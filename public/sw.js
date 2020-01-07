@@ -1,5 +1,5 @@
-const fileCache = 'file-cache-v2';
-const dataCache = 'data-cache-v2';
+const fileCache = 'file-cache-v5';
+const dataCache = 'data-cache-v5';
 
 const v2CacheFiles = [
     './',
@@ -28,6 +28,7 @@ const v2CacheFiles = [
 ];
 
 self.addEventListener('install', (e) => {
+    self.skipWaiting();
     e.waitUntil(
         caches.open(fileCache)
             .then((cache) => {
@@ -46,12 +47,14 @@ self.addEventListener('activate', (e) => {
                     return caches.delete(key);
                 }
             }));
+        }).then(() => {
+            return clients.claim();
         })
     );
 });
 
 self.addEventListener('fetch', (e) => {
-    if (e.request.url.includes('/forecast/')) {
+    if (e.request.url.includes('/api') || e.request.url.includes('/forecast')) {
         console.log('[Service Worker] Fetch (data)', e.request.url);
         e.respondWith(
             caches.open(dataCache).then((cache) => {
@@ -78,8 +81,23 @@ self.addEventListener('fetch', (e) => {
 });
 
 self.addEventListener('push', (evt) => {
-    console.log('push event')
+    console.log('Receivce a message from server');
+    let options = {};
+    let title = '';
+    let data = evt.data.text();
+    try {
+        const jsonData = JSON.parse(data);
+        title = jsonData.title;
+        options = Object.assign(options, jsonData);
+    } catch (e) {
+        title = data;
+    }
+    console.log(options);
     evt.waitUntil(
-        self.registration.showNotification('title')
+        self.registration.showNotification(title || '消息标题', options)
     );
+});
+
+self.addEventListener('notificationclick', (evt) => {
+    evt.notification.close();
 });

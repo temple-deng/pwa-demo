@@ -1,10 +1,6 @@
 const express = require('express');
 const fetch = require('node-fetch');
 const app = express();
-const fs = require('fs');
-const https = require('https');
-// const http = require()
-const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 const port = 3000;
 
 const webpush = require('web-push');
@@ -23,12 +19,6 @@ const vapidKeys = {
     'BIxbASaN0X-z4Xvc1912IGvP8bvwj5fbupQPRIp5E6Vqja_QM0sCakyNY8VtMUxPRHlIMkAooJf6X4MmEYLmGoI',
     privateKey: '-RZ5CK7LneN9bNbyr4W49c1vv6Ql1NQTVy3T8Wjd_xw'
 };
-
-webpush.setVapidDetails(
-    'mailto:630435132@@qq.com',
-    vapidKeys.publicKey,
-    vapidKeys.privateKey
-);
 
 function getForecast(req, resp) {
     const location = req.params.location || '40.051913, 116.301019';
@@ -59,9 +49,8 @@ app.use((req, resp, next) => {
 
 app.use(bodyParser.json());
 
-// app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
-app.get('/forecast/:location', getForecast);
-app.get('/forecast/', getForecast);
+app.get('/api/forecast/:location', getForecast);
+app.get('/api/forecast/', getForecast);
 app.get('/forecast', getForecast);
 
 app.post('/api/save-subscription', (req, res) => {
@@ -119,6 +108,7 @@ function saveSubscriptionToDatabase(subscription) {
 };
 
 function sendMessageToUser(data) {
+    console.log(data);
     return new Promise((resolve, reject) => {
         db.find({}, (err, docs) => {
             if (err) {
@@ -126,7 +116,6 @@ function sendMessageToUser(data) {
                 return
             }
 
-            console.log(docs);
             const promises = [];
             docs.forEach((doc) => {
                 promises.push(new Promise((re, rej) => {
@@ -140,7 +129,7 @@ function sendMessageToUser(data) {
                                 endpoint: doc.endpoint,
                                 keys: doc.keys
                             },
-                            data: "hhhhhhh",
+                            data: JSON.stringify(data),
                             applicationKeys: {
                                 public: vapidKeys.publicKey,
                                 private: vapidKeys.privateKey
@@ -159,11 +148,3 @@ function sendMessageToUser(data) {
 }
 
 module.exports = app;
-
-// https.createServer({
-//     key: fs.readFileSync('./keys/server.key'),
-//     cert: fs.readFileSync('./keys/server.cert')
-// }, app)
-// .listen(port, () => {
-//     console.log(`The https server listened on port ${port}`);
-// });

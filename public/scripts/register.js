@@ -5,32 +5,24 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
             .then((reg) => {
                 console.log('Service worker registered.', reg);
+                const promiseChain = Promise.resolve();
+                if (!('PushManager' in window)) {
+                    console.log('Your server do not support web push ');
+                    return promiseChain;
+                } else if (navigator.serviceWorker.controller) {
+                    return reg.pushManager.getSubscription()
+                        .then((subscription) => {
+                            if (subscription === null) {
+                                return subscribeUser(reg.pushManager);
+                            } else {
+                                console.log('User is subscribed');
+                                return promiseChain;
+                            }
+                        });
+                }
             })
             .catch((err) => {
                 console.error('Service worker register fail', err);
-            })
-            .then(() => {
-                return navigator.serviceWorker.getRegistration()
-                    .then((reg) => {
-                        const promiseChain = Promise.resolve();
-                        if (!('PushManager' in window)) {
-                            console.log('Your server do not support web push ');
-                            return promiseChain;
-                        } else {
-                            return reg.pushManager.getSubscription()
-                                .then((subscription) => {
-                                    if (subscription === null) {
-                                        return subscribeUser(reg.pushManager);
-                                    } else {
-                                        console.log('User is subscribed');
-                                        return promiseChain;
-                                    }
-                                })
-                                .catch(err => {
-                                    console.log(err);
-                                });
-                        }
-                    })
             });
     });
 
