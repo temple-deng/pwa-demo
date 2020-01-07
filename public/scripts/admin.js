@@ -21,10 +21,11 @@ btn.addEventListener('click', () => {
         })
     }).then((res) => {
         if (!res.ok) {
-            alert('推送失败')
+            alert('推送失败-not ok')
+            document.getElementById('error').innerHTML = res.statusText;
         }
     }).catch(err => {
-        alert('推送失败')
+        document.getElementById('error').innerHTML = JSON.stringify(err);
     });
 });
 
