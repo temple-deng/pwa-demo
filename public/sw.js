@@ -1,5 +1,5 @@
-const fileCache = 'file-cache-v1';
-const dataCache = 'data-cache-v1';
+const fileCache = 'file-cache-v2';
+const dataCache = 'data-cache-v2';
 
 const v2CacheFiles = [
     './',
