@@ -17,7 +17,8 @@
     margin: 0 auto;
 }
 
-.message {
+.message,
+.subscription {
     padding: 15px;
     margin: 20px auto 40px;
     width: 600px;

@@ -45,23 +45,24 @@ function subscribeUser(pushManager) {
 }
 
 function saveSubScriptionToServer(subscription) {
-    return fetch('/api/save-subscription', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(subscription)
-    })
-        .then((res) => {
-            if (res.ok) {
-                console.log('save subscription success');
-            } else {
-                console.log('save failed');
-            }
-        })
-        .catch(err => {
-            console.log('save failed');
-        });
+    return Promise.resolve();
+    // return fetch('/api/save-subscription', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(subscription)
+    // })
+    //     .then((res) => {
+    //         if (res.ok) {
+    //             console.log('save subscription success');
+    //         } else {
+    //             console.log('save failed');
+    //         }
+    //     })
+    //     .catch(err => {
+    //         console.log('save failed');
+    //     });
 }
 
 function urlB64ToUint8Array(base64String) {

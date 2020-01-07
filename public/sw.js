@@ -1,5 +1,5 @@
-const fileCache = 'file-cache-v5';
-const dataCache = 'data-cache-v5';
+const fileCache = 'file-cache-v1';
+const dataCache = 'data-cache-v1';
 
 const v2CacheFiles = [
     './',
@@ -54,7 +54,7 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-    if (e.request.url.includes('/api') || e.request.url.includes('/forecast')) {
+    if (e.request.url.includes('/forecast')) {
         console.log('[Service Worker] Fetch (data)', e.request.url);
         e.respondWith(
             caches.open(dataCache).then((cache) => {
