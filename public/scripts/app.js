@@ -93,7 +93,7 @@ function renderForecast(card, data) {
 }
 
 function getForecastFromNetwork(coords) {
-return fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0451d9104216d2a350a2d39ea16a6115/${coords}`, {
+return fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0451d9104216d2a350a2d39ea16a6115/${coords}?lang=zh&units=auto`, {
     mode: 'cors'
 })
     .then((response) => {
@@ -108,7 +108,7 @@ function getForecastFromCache(coords) {
     if (!('caches' in window)) {
         return Promise.resolve(null);
     }
-    const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0451d9104216d2a350a2d39ea16a6115/${coords}`;
+    const url = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0451d9104216d2a350a2d39ea16a6115/${coords}?lang=zh&units=auto`;
     return caches.match(url)
         .then((response) => {
         if (response) {
