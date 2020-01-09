@@ -1,5 +1,10 @@
 window.addEventListener('beforeinstallprompt', saveBeforeInstallPromptEvent);
 
+window.addEventListener('appinstalled', () => {
+    const installBtn = document.getElementById('butInstall');
+    installBtn.setAttribute('hidden', true);
+});
+
 function saveBeforeInstallPromptEvent(e) {
     let deferredInstallPrompt = e;
     const installBtn = document.getElementById('butInstall');

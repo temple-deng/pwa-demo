@@ -1,3 +1,16 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 .header {
     background-color: #222;
     display: flex;
@@ -13,12 +26,16 @@
 }
 
 .main {
-    width: 900px;
+    width: 100%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .message,
 .subscription {
+    max-width: 100%;
+    box-sizing: border-box;
     padding: 15px;
     margin: 20px auto 40px;
     width: 600px;
@@ -31,7 +48,7 @@
 }
 
 .btn {
-    margin-left: 135px;
+    align-self: center;
     color: #fff;
     background-color: #1890ff;
     border-color: #1890ff;
