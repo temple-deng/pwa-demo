@@ -6,6 +6,7 @@ const privateKey = '-RZ5CK7LneN9bNbyr4W49c1vv6Ql1NQTVy3T8Wjd_xw';
 new VConsole()
 
 btn.addEventListener('click', () => {
+    console.log(subscription);
     fetch('https://cors-anywhere.herokuapp.com/https://web-push-codelab.glitch.me/api/send-push-msg', {
         method: 'POST',
         mode: 'cors',
@@ -34,7 +35,7 @@ btn.addEventListener('click', () => {
     });
 });
 
-navigator.serviceWorker.getRegistration()
+navigator.serviceWorker.register('./sw.js')
     .then(reg => {
         if (reg) {
             return reg.pushManager.getSubscription()
